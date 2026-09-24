@@ -131,6 +131,13 @@ npm run build      # ES 产物 + .d.ts, peer 全部外部化
 `react` / `react-dom` / `antd` / `echarts` / `dayjs` / `@ant-design/icons` / `@dnd-kit/*` 都是 peer：
 `react >= 18`、`antd >= 5.29 || ^6`，其余标了 `optional`（只有用到对应那半边时才需要装）。
 
+**写 antd 属性时必须两端通吃**：`5.29.3` 是 antd 5 的最后一版，`Statistic.styles` / `Tag.variant`
+这类新 API 只在 6 上有，`valueStyle` / `bordered` 只在 5 上不弃用 —— 用哪一头都会在另一头静默失效
+（生产构建不打弃用告警，坏掉的样式不会报错）。包内一律走两端都认的写法
+（字号用 `Statistic.valueRender`，无边框用 `style.borderColor`），
+`src/test/deprecation.test.tsx` 会把内置部件与内置字段定义全渲染一遍并断言控制台没有 `deprecated`。
+z-render 的 devDeps 装的是 antd 6，所以 5.29 那一头由 z-lc 自己的用例与页面守住。
+
 ## 发布
 
 `@yuku123/render` 发到 npmjs（组织唯一的 npm 发布口径，和 `@yuku123/z-*-frontend-component` 同一命名空间）：

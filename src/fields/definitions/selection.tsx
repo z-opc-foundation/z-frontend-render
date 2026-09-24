@@ -54,8 +54,10 @@ export const dictDefinition: FieldDefinition = {
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
           verticalAlign: 'middle',
+          // 5.29 的 `bordered={false}` 就是加一个 border-color: transparent 的类,
+          // antd 6 改叫 variant="filled" —— 两个 API 各缺一半, 所以直接把边框写进 style。
+          borderColor: 'transparent',
         }}
-        bordered={false}
         color="processing"
       >
         {label || asText(value)}

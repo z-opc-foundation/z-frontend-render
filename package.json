@@ -1,6 +1,6 @@
 {
   "name": "@yuku123/render",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "平台共享前端渲染引擎: schema → antd/echarts 渲染 + 12 栏栅格布局编辑 + 字段类型注册表 (z-report / z-lc 共用)",
   "main": "dist/index.js",
