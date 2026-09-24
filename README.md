@@ -142,7 +142,18 @@ npm publish                                          # publishConfig 已固定�
 ```
 
 `~/.npmrc` 默认 registry 是 npmmirror（只读镜像），发包必须靠 `publishConfig.registry` 这一行；
-`prepublishOnly` 会先跑测试再重建 dist，避免把旧产物发出去。
+`prepublishOnly` 会先跑测试再重建 dist，避免把旧产物发出去。发布凭证（`@yuku123` scope 的 Granular Token）
+按组织惯例记在 `z-biz-tool-lead/004_重要秘钥/npm-token.md`，口径索引见 `z-opc-foundation-lead/004_重要秘钥/npm-token.md`。
+
+发完还要手动推镜像，否则本机 `npm install` 装不到（默认源是镜像不是 npmjs）：
+
+```bash
+curl -X PUT https://registry.npmmirror.com/@yuku123%2Frender/sync
+npm view @yuku123/render version --registry=https://registry.npmjs.org/    # 冒烟：npmjs 可见
+npm view @yuku123/render version --registry=https://registry.npmmirror.com # 冒烟：镜像已同步
+```
+
+已发版本：`1.0.0`（2026-09-24）。z-report / z-lc 均以 registry 依赖 `^1.0.0`，不再用 `file:` 或 workspace 直连。
 
 ## 边界与待办
 
