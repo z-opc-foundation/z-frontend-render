@@ -1,7 +1,7 @@
 export * from './contract/view'
 export * from './layout/grid'
 export { default as UniversalRenderer, BUILTIN_WIDGETS } from './renderer/UniversalRenderer'
-// README 与 z-report 都用 `import UniversalRenderer from '@yuku123/render'`, 默认出口得跟着给
+// README 与 z-report 都用 `import UniversalRenderer from '@yuku123/z-frontend-render'`, 默认出口得跟着给
 export { default } from './renderer/UniversalRenderer'
 export type { UniversalRendererProps } from './renderer/UniversalRenderer'
 export type { WidgetComponent, WidgetProps, WidgetRegistry } from './renderer/types'

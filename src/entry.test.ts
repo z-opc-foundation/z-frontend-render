@@ -3,7 +3,7 @@ import DefaultRenderer, { BUILTIN_WIDGETS, UniversalRenderer } from './index'
 import * as fields from './fields'
 
 /**
- * 出口形状本身就是契约: 消费方是按 `import X from '@yuku123/render'` 写的,
+ * 出口形状本身就是契约: 消费方是按 `import X from '@yuku123/z-frontend-render'` 写的,
  * 根入口少一个 default 会等到别人打包时才炸, 所以在这里先守住。
  */
 describe('包出口', () => {

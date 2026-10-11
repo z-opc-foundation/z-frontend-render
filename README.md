@@ -1,6 +1,6 @@
-# z-render
+# z-frontend-render
 
-> 平台共享的**前端渲染引擎** —— 后端产出 schema，前端只负责把它变成能看的界面（npm 包 `@yuku123/render`）
+> 平台共享的**前端渲染引擎** —— 后端产出 schema，前端只负责把它变成能看的界面（npm 包 `@yuku123/z-frontend-render`）
 
 一人公司基座里"渲染"这件事只做一遍：z-report（报表看板）与 z-lc（低代码）共用同一套部件分发、
 12 栏栅格算术、ECharts 适配与字段类型注册表，两边不再各写一份 antd / echarts 拼装代码。
@@ -15,8 +15,8 @@
 
 | 字段 | 值 |
 |------|-----|
-| **仓库** | `z-render`（TypeScript + npm 仓，不走 Maven） |
-| **npm 包** | `@yuku123/render`，`type: module` |
+| **仓库** | `z-frontend-render`（TypeScript + npm 仓，不走 Maven；2026-10-11 自 z-render 更名，npm 包同步 @yuku123/render → @yuku123/z-frontend-render） |
+| **npm 包** | `@yuku123/z-frontend-render`，`type: module` |
 | **当前版本** | `1.0.1`（见 [`package.json`](package.json) 的 `version`） |
 | **registry 实测** | npmjs latest `1.0.1`，已发版本 `1.0.0` / `1.0.1`（均 2026-09-24 发布）；**本地 `package.json` 与线上一致** |
 | **发布口径** | `publishConfig.registry = https://registry.npmjs.org/` + `access: public`；`files: ["dist", "src"]`（契约镜像连源码一起上包） |
@@ -55,15 +55,15 @@
 
 | 入口 | 给谁 | 出口 | 需要的 peer |
 |------|------|------|-------------|
-| `@yuku123/render` | z-report：schema → 看板/图表 | `UniversalRenderer`（同时是 default 出口）、`BUILTIN_WIDGETS`、四个内置部件、`WidgetShell`、`buildChartOption` / `stripRenderMeta` / `isRenderMetaKey` / `DEFAULT_PALETTE`、`useChart`、栅格工具、`contract/view` 全部类型 | `react` `react-dom` `antd`，图表那半另需 `echarts` |
-| `@yuku123/render/fields` | z-lc：字段注册表 + 运行时值转换 | `createWorkspaceContext` / `resolveField` / `resolveEntityFields` / `readFieldValue` / `registerFieldDefinition` / `getFieldDefinition` / `listFieldDefinitions` / `buildDescriptorIndex` / `DEFAULT_DESCRIPTORS` / `systemFieldDefs` / `isSystemField` / `SYSTEM_FIELD_CODES` / `pickLabelField`、`defaults` 7 项、`coerce` 8 项、`columnRules` 3 项、`definitions/shared`（`ClampedText` / `NullCell` / `inlineKeyHandlers` / `editorFillStyle`）、`contract/field` 全部类型 | `react` `react-dom` `antd` `dayjs` `@ant-design/icons` |
+| `@yuku123/z-frontend-render` | z-report：schema → 看板/图表 | `UniversalRenderer`（同时是 default 出口）、`BUILTIN_WIDGETS`、四个内置部件、`WidgetShell`、`buildChartOption` / `stripRenderMeta` / `isRenderMetaKey` / `DEFAULT_PALETTE`、`useChart`、栅格工具、`contract/view` 全部类型 | `react` `react-dom` `antd`，图表那半另需 `echarts` |
+| `@yuku123/z-frontend-render/fields` | z-lc：字段注册表 + 运行时值转换 | `createWorkspaceContext` / `resolveField` / `resolveEntityFields` / `readFieldValue` / `registerFieldDefinition` / `getFieldDefinition` / `listFieldDefinitions` / `buildDescriptorIndex` / `DEFAULT_DESCRIPTORS` / `systemFieldDefs` / `isSystemField` / `SYSTEM_FIELD_CODES` / `pickLabelField`、`defaults` 7 项、`coerce` 8 项、`columnRules` 3 项、`definitions/shared`（`ClampedText` / `NullCell` / `inlineKeyHandlers` / `editorFillStyle`）、`contract/field` 全部类型 | `react` `react-dom` `antd` `dayjs` `@ant-design/icons` |
 
 `@dnd-kit/*` 目前是**预留**：peer 里声明了、`vite.lib.config.ts` 也把它们外部化了，但 `src/` 里
 零引用 —— 拖动配置（`LayoutEditor`）还没落地，见文末待办。
 
 ```bash
-npm i @yuku123/render                              # 报表侧
-npm i @yuku123/render dayjs @ant-design/icons      # 低代码侧（用到 ./fields）
+npm i @yuku123/z-frontend-render                              # 报表侧
+npm i @yuku123/z-frontend-render dayjs @ant-design/icons      # 低代码侧（用到 ./fields）
 ```
 
 实测接入点：`z-report/_frontend/src/pages/ViewPage.jsx` 与 `SharePage.jsx` 走 default 出口；
@@ -76,7 +76,7 @@ npm i @yuku123/render dayjs @ant-design/icons      # 低代码侧（用到 ./fie
 ### 用法：报表侧
 
 ```tsx
-import UniversalRenderer from '@yuku123/render'
+import UniversalRenderer from '@yuku123/z-frontend-render'
 
 // renderData 就是 GET /api/render/view/{viewId} 的响应
 <UniversalRenderer renderData={renderData} />
@@ -94,7 +94,7 @@ import UniversalRenderer from '@yuku123/render'
 `UniversalRendererProps` 另有 `rowHeight`（默认 `ROW_H = 60`）、`gap`（默认 12）、`loadingText`、
 `className`、`style`；`renderData` 为空时渲染 Spin 占位，`layout` 里没有可渲染部件时渲染 antd `Empty`。
 
-### 用法：字段注册表（`@yuku123/render/fields`）
+### 用法：字段注册表（`@yuku123/z-frontend-render/fields`）
 
 视图侧只跟解析结果（`ResolvedField`）打交道，类型分支全在注册表里 —— 注册表是包里**唯一**允许解释
 `fieldType` / `widget` / `dictCode` / `refEntity` 的地方，视图侧不该出现 `switch (fieldType)`：
@@ -104,7 +104,7 @@ import {
   createWorkspaceContext,
   resolveEntityFields,
   readFieldValue,
-} from '@yuku123/render/fields'
+} from '@yuku123/z-frontend-render/fields'
 
 const ws = createWorkspaceContext({
   appCode, tenantCode,
@@ -148,8 +148,8 @@ ISO-8601 与 epoch 毫秒都不认。所以线格式在这里收口，不在视�
 ## 🏗️ 项目结构
 
 ```
-z-render/
-├── package.json              # @yuku123/render 1.0.1：exports / files / scripts / peerDependencies
+z-frontend-render/
+├── package.json              # @yuku123/z-frontend-render 1.0.1：exports / files / scripts / peerDependencies
 ├── src/
 │   ├── index.ts              # 根入口 barrel（含 default 出口 = UniversalRenderer）
 │   ├── contract/
@@ -253,7 +253,7 @@ npm test           # vitest run（8 个用例文件，全在 src/**，与源码�
 
 ## 🚢 发布
 
-`@yuku123/render` 发到 npmjs（组织唯一的 npm 发布口径，和 `@yuku123/z-*-frontend-component` 同一命名空间）：
+`@yuku123/z-frontend-render` 发到 npmjs（组织唯一的 npm 发布口径，和 `@yuku123/z-*-frontend-component` 同一命名空间）：
 
 ```bash
 npm login --registry=https://registry.npmjs.org/   # 需要 @yuku123 的发布权限
@@ -269,8 +269,8 @@ Granular Access Token（环境变量名 `NPM_TOKEN`），**值不进 README、�
 
 ```bash
 curl -X PUT https://registry.npmmirror.com/@yuku123%2Frender/sync
-npm view @yuku123/render version --registry=https://registry.npmjs.org/    # 冒烟：npmjs 可见
-npm view @yuku123/render version --registry=https://registry.npmmirror.com # 冒烟：镜像已同步
+npm view @yuku123/z-frontend-render version --registry=https://registry.npmjs.org/    # 冒烟：npmjs 可见
+npm view @yuku123/z-frontend-render version --registry=https://registry.npmmirror.com # 冒烟：镜像已同步
 ```
 
 已发版本：`1.0.0`、`1.0.1`（均 2026-09-24，latest = `1.0.1`，1.0.1 那次改的就是上面的 antd 双认写法）。

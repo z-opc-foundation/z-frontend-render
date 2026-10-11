@@ -1,6 +1,6 @@
 {
-  "name": "@yuku123/render",
-  "version": "1.0.1",
+  "name": "@yuku123/z-frontend-render",
+  "version": "1.1.0",
   "type": "module",
   "description": "平台共享前端渲染引擎: schema → antd/echarts 渲染 + 12 栏栅格布局编辑 + 字段类型注册表 (z-report / z-lc 共用)",
   "main": "dist/index.js",
@@ -10,12 +10,12 @@
   "author": "yuku123",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/z-opc-foundation/z-render.git"
+    "url": "git+https://github.com/z-opc-foundation/z-frontend-render.git"
   },
-  "bugs": "https://github.com/z-opc-foundation/z-render/issues",
-  "homepage": "https://github.com/z-opc-foundation/z-render#readme",
+  "bugs": "https://github.com/z-opc-foundation/z-frontend-render/issues",
+  "homepage": "https://github.com/z-opc-foundation/z-frontend-render#readme",
   "keywords": [
-    "renderer",
+    "z-frontend-render",
     "schema",
     "antd",
     "echarts",
