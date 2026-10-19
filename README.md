@@ -17,16 +17,16 @@
 |------|-----|
 | **仓库** | `z-frontend-render`（TypeScript + npm 仓，不走 Maven；2026-10-11 自 z-render 更名，npm 包同步 @yuku123/render → @yuku123/z-frontend-render） |
 | **npm 包** | `@yuku123/z-frontend-render`，`type: module` |
-| **当前版本** | `1.0.1`（见 [`package.json`](package.json) 的 `version`） |
-| **registry 实测** | npmjs latest `1.0.1`，已发版本 `1.0.0` / `1.0.1`（均 2026-09-24 发布）；**本地 `package.json` 与线上一致** |
+| **当前版本** | `1.1.0`（见 [`package.json`](package.json) 的 `version`） |
+| **registry 实测** | npmjs latest `1.1.0`，已发版本 `0.0.0-stage` / `1.1.0`（2026-10-19 实测）；**本地 `package.json` 与线上一致**。⚠️ 旧包名 `@yuku123/render` 停在 `1.0.1` —— 那是**另一个包**（2026-10-11 仓与包同日更名，见「仓库」行），别再拿它的版本号当本包的读数 |
 | **发布口径** | `publishConfig.registry = https://registry.npmjs.org/` + `access: public`；`files: ["dist", "src"]`（契约镜像连源码一起上包） |
 | **入口（exports）** | `.` → `dist/index.js` / `dist/index.d.ts`；`./fields` → `dist/fields.js`（types 落 `dist/fields/index.d.ts`） |
 | **产物形态** | 只有 ESM：`vite build --config vite.lib.config.ts`（`formats: ['es']`、`target: es2020`、sourcemap）+ `tsc -p tsconfig.build.json` 出声明；**无 CJS 产物** |
 | **peer 口径** | `react` / `react-dom` `>=18.0.0`、`antd` `>=5.29.0 || ^6.0.0` 三者**必需**；`echarts ^5.0.0`、`dayjs >=1.11.0`、`@ant-design/icons >=5.0.0`、`@dnd-kit/*` 标 `optional` |
-| **实测消费方** | `z-report/_frontend` 依赖 `^1.0.1`（antd `^6.3.3` · react `^19.2.0`）；`z-lc/z-lc-admin-ui` 依赖 `^1.0.1`（antd `5.29.3` · react `^18.3.1`）—— 两端确实同时在跑 |
+| **实测消费方** | `z-lc/z-lc-admin-ui` 与 `z-lc/_frontend/z-lc-suit` 依赖 `^1.1.0`（antd `5.29.3` / `18.3.1` 与 `^6.3.3` / `^19.2.0` 两套并存）；`z-opc/bootstraps/z-opc-main-starter-frontend` 依赖 `^1.1.0` —— 三处均已按新包名走 registry。⚠️ `z-report/_frontend`（旧 README 提到的第四个消费方）**不在本工作区、manifest 里也没有**，本机无法核实 |
 | **本地预览** | `playground/`（不依赖任何后端），`npm run dev` → `http://localhost:5399` |
 | **许可证** | MIT（见 [`LICENSE`](LICENSE)） |
-| **最近更新** | 2026-09-30 |
+| **最近更新** | 2026-10-11（仓内最后一次提交 `chore: npm pack 产物 *.tgz 不入库`） |
 
 ---
 
@@ -149,7 +149,7 @@ ISO-8601 与 epoch 毫秒都不认。所以线格式在这里收口，不在视�
 
 ```
 z-frontend-render/
-├── package.json              # @yuku123/z-frontend-render 1.0.1：exports / files / scripts / peerDependencies
+├── package.json              # @yuku123/z-frontend-render 1.1.0：exports / files / scripts / peerDependencies
 ├── src/
 │   ├── index.ts              # 根入口 barrel（含 default 出口 = UniversalRenderer）
 │   ├── contract/
@@ -273,8 +273,18 @@ npm view @yuku123/z-frontend-render version --registry=https://registry.npmjs.or
 npm view @yuku123/z-frontend-render version --registry=https://registry.npmmirror.com # 冒烟：镜像已同步
 ```
 
-已发版本：`1.0.0`、`1.0.1`（均 2026-09-24，latest = `1.0.1`，1.0.1 那次改的就是上面的 antd 双认写法）。
-两个下游均已按 registry 依赖 `^1.0.1`，不再用 `file:` 或 workspace 直连。
+已发版本：`0.0.0-stage`、`1.1.0`（latest = `1.1.0`，2026-10-19 实测）。旧包名 `@yuku123/render` 停在 `1.0.0` / `1.0.1`
+（2026-09-24 发布，2026-10-11 随仓更名停更）—— 那两个版本属于**另一个包**，消费方现在一律走 `@yuku123/z-frontend-render@^1.1.0`。
+三个消费方（`z-lc/z-lc-admin-ui`、`z-lc/_frontend/z-lc-suit`、`z-opc/bootstraps/z-opc-main-starter-frontend`）
+均已按 registry 依赖 `^1.1.0`，不再用 `file:` 或 workspace 直连。
+
+---
+
+## 文档目录
+
+本项目文档统一收口在 `_doc/` 下（八类固定编号表，桶按需存在）:
+
+- [`_doc/001_arch/`](_doc/001_arch/) — 架构、接口、DB schema、协议、路线图
 
 ---
 
