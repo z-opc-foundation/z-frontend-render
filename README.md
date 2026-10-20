@@ -168,6 +168,7 @@ z-frontend-render/
 │   │   ├── index.ts  types.ts  registry.ts  defaults.ts  coerce.ts  columnRules.ts
 │   │   └── definitions/      # textual / numeric / temporal / selection / reference / shared
 │   └── test/                 # setup.ts（jsdom 垫片）+ deprecation.test.tsx（antd 弃用告警守卫）
+│                              # + readme-claims.test.ts（README 定量主张自守卫）
 ├── playground/               # 独立调试台：Playground.tsx / main.tsx / index.html，不依赖后端
 ├── vite.config.ts            # playground 用：root = playground, port 5399
 ├── vite.lib.config.ts        # 库构建用：两入口、ES only、peer 全部 external
@@ -236,7 +237,7 @@ z-lc 自己的用例与页面守住。
 ## 🧪 测试
 
 ```bash
-npm test           # vitest run（8 个用例文件，全在 src/**，与源码同目录）
+npm test           # vitest run（用例文件全在 src/**，与源码同目录；数量会随新增用例漂移，故只点名不计数）
 ```
 
 - 环境是 jsdom；`src/test/setup.ts` 补 `ResizeObserver` / `matchMedia` / `scrollIntoView` / `scrollTo`
