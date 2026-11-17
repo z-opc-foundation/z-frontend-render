@@ -12,6 +12,7 @@ const PEERS = [
   '@dnd-kit/core',
   '@dnd-kit/sortable',
   '@dnd-kit/utilities',
+  'zustand',
 ]
 
 function isPeer(id: string): boolean {
@@ -27,12 +28,22 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2020',
     lib: {
-      // 两个入口 = 两个消费面: root 是报表渲染半边, ./fields 是低代码字段注册表半边。
-      // 分成入口而不是共用一个 barrel, 既避开两套契约里 FieldType 的同名冲突,
-      // 也让 z-report 不必为字段层装上 dayjs / @ant-design/icons。
-      entry: { index: 'src/index.ts', fields: 'src/fields/index.ts' },
+      // 三个入口 = 三个消费面: root 报表渲染半边, ./fields 字段注册表半边,
+      // ./tree 组件树渲染半边 (统一 Schema 的 elements + layout 树递归)。
+      // 分成入口而不是共用一个 barrel, 既避开多套契约里 FieldType 的同名冲突,
+      // 也让各消费方只装各自需要的 peer。
+      entry: {
+        index: 'src/index.ts',
+        fields: 'src/fields/index.ts',
+        tree: 'src/tree/index.ts',
+        designer: 'src/designer/index.ts',
+        // 物料库单独出包：运行态页面只需要物料，不该为此背上整个设计器
+        materials: 'src/designer/materials/index.tsx',
+      },
       formats: ['es'],
       fileName: (_format, entryName) => `${entryName}.js`,
+      // 设计器样式单独出文件，消费方用 `@yuku123/z-frontend-render/designer.css` 引入
+      cssFileName: 'designer',
     },
     rollupOptions: { external: isPeer },
   },

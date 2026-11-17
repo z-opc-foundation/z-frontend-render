@@ -1,6 +1,6 @@
 {
   "name": "@yuku123/z-frontend-render",
-  "version": "1.1.0",
+  "version": "1.4.4",
   "type": "module",
   "description": "平台共享前端渲染引擎: schema → antd/echarts 渲染 + 12 栏栅格布局编辑 + 字段类型注册表 (z-report / z-lc 共用)",
   "main": "dist/index.js",
@@ -36,6 +36,19 @@
     "./fields": {
       "types": "./dist/fields/index.d.ts",
       "default": "./dist/fields.js"
+    },
+    "./tree": {
+      "types": "./dist/tree/index.d.ts",
+      "default": "./dist/tree.js"
+    },
+    "./designer": {
+      "types": "./dist/designer/index.d.ts",
+      "default": "./dist/designer.js"
+    },
+    "./designer.css": "./dist/designer.css",
+    "./materials": {
+      "types": "./dist/designer/materials/index.d.ts",
+      "default": "./dist/materials.js"
     }
   },
   "files": [
@@ -61,7 +74,8 @@
     "dayjs": ">=1.11.0",
     "echarts": "^5.0.0",
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react-dom": ">=18.0.0",
+    "zustand": ">=4.4.0"
   },
   "peerDependenciesMeta": {
     "@ant-design/icons": {
@@ -80,6 +94,9 @@
       "optional": true
     },
     "echarts": {
+      "optional": true
+    },
+    "zustand": {
       "optional": true
     }
   },
@@ -103,6 +120,7 @@
     "react-dom": "^19.2.0",
     "typescript": "^5.9.3",
     "vite": "^6.2.0",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "zustand": "^5.1.0"
   }
 }

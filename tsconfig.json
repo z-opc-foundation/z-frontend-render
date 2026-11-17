@@ -19,5 +19,5 @@
     "noEmit": true,
     "types": ["vitest/globals"]
   },
-  "include": ["src", "playground", "*.ts"]
+  "include": ["src", "playground"]
 }

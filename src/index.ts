@@ -12,3 +12,7 @@ export { default as RawWidget, MAX_TREE_NODES } from './renderer/widgets/RawWidg
 export { default as TableWidget, MAX_RENDER_ROWS } from './renderer/widgets/TableWidget'
 export { buildChartOption, stripRenderMeta, isRenderMetaKey, DEFAULT_PALETTE } from './charts/option'
 export { useChart } from './charts/useChart'
+// 统一 Schema 组件树渲染半边 (详细入口走 ./tree, 这里只做类型/主组件的可发现性导出)
+export { default as TreeRenderer } from './tree/TreeRenderer'
+export type { TreeRendererProps } from './tree/TreeRenderer'
+export type { PageSchema, SchemaNode, NodeStructure } from './tree/contract'
